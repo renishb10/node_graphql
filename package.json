@@ -1,0 +1,28 @@
+{
+  "name": "node_graphql_server",
+  "version": "1.0.0",
+  "description": "Simple NodeJS GraphQL Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renishb10/node_graphql.git"
+  },
+  "keywords": [
+    "nodejs",
+    "graphql",
+    "renish",
+    "node"
+  ],
+  "author": "Renish B",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/renishb10/node_graphql/issues"
+  },
+  "homepage": "https://github.com/renishb10/node_graphql#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
