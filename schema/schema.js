@@ -5,10 +5,10 @@ const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt }
 
 //Temp book collection
 const books = [
-    { name: 'Win Win', id: "123", genre: 'Hello World Genre' },
-    { name: 'Bacardy', id: "323" },
-    { name: 'Long ago', id: "545" },
-    { name: 'Variety', id: "878" }
+    { name: 'Win Win', id: "123", genre: 'Hello World Genre', authorId: "1" },
+    { name: 'Bacardy', id: "323", genre: 'Hello World Genre', authorId: "2" },
+    { name: 'Long ago', id: "545", genre: 'Hello World Genre', authorId: "1" },
+    { name: 'Variety', id: "878", genre: 'Hello World Genre', authorId: "3" }
 ];
 
 //Temp book collection
@@ -23,7 +23,14 @@ const BookType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         name: { type: GraphQLString },
-        genre: { type: GraphQLString }
+        genre: { type: GraphQLString },
+        author: {
+            type: AuthorType,
+            resolve(parent, args) {
+                console.log(parent);
+                return _.find(authors, {id: parent.authorId });
+            }
+        }
     })
 });
 
