@@ -1,5 +1,7 @@
 const graphql = require('graphql');
 const _ = require('lodash');
+const Book = require('../models/book');
+const Author = require('../models/author');
 
 const { 
     GraphQLObjectType, 
@@ -9,21 +11,6 @@ const {
     GraphQLInt, 
     GraphQLList 
 } = graphql;
-
-//Temp book collection
-const books = [
-    { name: 'Win Win', id: "123", genre: 'Hello World Genre', authorId: "1" },
-    { name: 'Bacardy', id: "323", genre: 'Hello World Genre', authorId: "2" },
-    { name: 'Long ago', id: "545", genre: 'Hello World Genre', authorId: "1" },
-    { name: 'Variety', id: "878", genre: 'Hello World Genre', authorId: "3" }
-];
-
-//Temp book collection
-const authors = [
-    { id: "1", name: 'Ren', age: 90 },
-    { id: "2", name: 'Ish', age: 89 },
-    { id: "3", name: 'Rudra', age: 90 }
-];
 
 const BookType = new GraphQLObjectType({
     name: 'Book',
@@ -91,6 +78,43 @@ const RootQuery = new GraphQLObjectType({
     }
 });
 
+const Mutation = new GraphQLObjectType({
+    name: 'Mutuation',
+    fields: {
+        addAuthor: {
+            type: AuthorType,
+            args: {
+                name: { type: GraphQLString },
+                age: { type: GraphQLInt }
+            },
+            resolve(parent, args) {
+                let author = new Author({
+                    name: args.name,
+                    age: args.age
+                });
+                return author.save();
+            }
+        },
+        addBook: {
+            type: BookType,
+            args: {
+                name: { type: GraphQLString },
+                genre : { type: GraphQLString },
+                authorId: { type: GraphQLID }
+            },
+            resolve(parent, args) {
+                let book = new Book({
+                    name: args.name,
+                    genre: args.genre,
+                    authorId: args.authorId
+                });
+                return book.save();
+            }
+        }
+    }
+});
+
 module.exports = new GraphQLSchema({
-    query: RootQuery
+    query: RootQuery,
+    mutation: Mutation
 });
